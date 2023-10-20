@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test task 1</title>
+</head>
+<body>
+    <script>
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1')
+        .then(response => response.json())
+        .then(data => {
+        // Создаем таблицу
+        const table = document.createElement('table');
+    
+         // Добавляем заголовок таблицы
+        const headerRow = table.insertRow();
+        const idHeader = headerRow.insertCell();
+        idHeader.textContent = 'id';
+        const symbolHeader = headerRow.insertCell();
+        symbolHeader.textContent = 'symbol';
+        const nameHeader = headerRow.insertCell();
+        nameHeader.textContent = 'name';
+    
+        // Добавляем строки в таблицу для каждой валюты
+        data.forEach(currency => {
+            const row = table.insertRow();
+      
+            // Добавляем данные в ячейки строки
+            const idCell = row.insertCell();
+            idCell.textContent = currency.id;
+            const symbolCell = row.insertCell();
+            symbolCell.textContent = currency.symbol;
+            const nameCell = row.insertCell();
+            nameCell.textContent = currency.name;
+      
+            // Устанавливаем цвет фона
+            if (currency.symbol === 'usdt') {
+                row.style.backgroundColor = 'green';
+            } else if (data.indexOf(currency) < 5) {
+                row.style.backgroundColor = 'blue';
+            }
+            });
+    
+            // Добавляем таблицу на страницу
+            document.body.appendChild(table);
+        })
+        .catch(error => {
+            console.log('Произошла ошибка:', error);
+        });
+    </script> 
+</body>  
+</html>
